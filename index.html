@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Srećna godišnjica</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: #ffe6e6;
+    overflow: hidden;
+    text-align: center;
+    color: #ff0066;
+  }
+
+  h1 {
+    margin-top: 50px;
+    font-size: 2.5em;
+  }
+
+  .heart-button {
+    margin-top: 50px;
+    font-size: 2em;
+    cursor: pointer;
+    background: #ff3366;
+    border: none;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+
+  .heart-button:hover {
+    transform: scale(1.2);
+  }
+
+  #slideshow-container {
+    display: none;
+    margin-top: 50px;
+    width: 80%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  #slideshow {
+    position: relative;
+    width: 100%;
+    height: 500px; 
+    overflow: hidden;
+    border-radius: 10px;
+    background: #ffe6e6; 
+    box-shadow: 0 0 20px rgba(255,0,102,0.5);
+  }
+
+  #slideshow img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    object-fit: contain;
+    background: #ffe6e6;
+  }
+
+  #slideshow img.active {
+    opacity: 1;
+  }
+
+  #caption {
+    margin-top: 15px;
+    font-size: 1.2em;
+    color: #ff3366;
+  }
+
+  /* Kraj poruka */
+  #end-message {
+    display: none;
+    font-size: 2em;
+    color: #ff0066;
+    margin-top: 50px;
+    animation: pulse 1s infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.2); }
+  }
+
+  /* Padajuca srca */
+  .heart {
+    position: absolute;
+    font-size: 24px;
+    animation: fall 5s linear infinite;
+    color: #ff3366;
+    user-select: none;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Srećnih godinu dana ljubavi ❤️</h1>
+<button class="heart-button" onclick="startSlideshow()">💖</button>
+
+<div id="slideshow-container">
+  <div id="slideshow">
+    <img src="laura9.jpg" alt="Slika 1" class="active">
+    <img src="laura1.jpg" alt="Slika 2">
+    <img src="laura2.jpg" alt="Slika 3">
+    <img src="laura3.jpg" alt="Slika 4">
+    <img src="laura4.jpg" alt="Slika 5">
+    <img src="laura5.jpg" alt="Slika 6">
+    <img src="laura6.jpg" alt="Slika 7">
+    <img src="laura7.jpg" alt="Slika 8">
+    <img src="1000005130.jpg" alt="Slika 9">
+    <img src="laura10.jpg" alt="Slika 10">
+  </div>
+  <div id="caption">Volim svaki trenutak sa tobom ❤️</div>
+</div>
+
+<div id="end-message">Volim te zauvek ❤️</div>
+
+<script>
+  // Padajuca srca
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerText = '❤️';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.fontSize = (10 + Math.random() * 30) + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+  }
+  setInterval(createHeart, 300);
+
+  const captions = [
+    "Volim svaki trenutak sa tobom ❤️",
+    "Ti si moje sunce u oblacima ☀️",
+    "Zauvek tvoj, zauvek moja 💞",
+    "S tobom je svaki dan posebna priča ✨",
+    "Ti činiš moj svet lepšim 🌹",
+    "Srećna godina ljubavi sa tobom 💖",
+    "Ti si moj dom gde god da idem 🏡",
+    "Hvala što me voliš takvog kakav jesam 💗",
+    "Tvoje oči su moje nebo 🌟",
+    "Zauvek zajedno, zauvek ti i ja 💑"
+  ];
+
+  function startSlideshow() {
+    document.querySelector('.heart-button').style.display = 'none';
+    const container = document.getElementById('slideshow-container');
+    const images = document.querySelectorAll('#slideshow img');
+    const caption = document.getElementById('caption');
+    const endMessage = document.getElementById('end-message');
+    let current = 0;
+
+    images.forEach(img => img.classList.remove('active'));
+    images[0].classList.add('active');
+    caption.innerText = captions[0];
+    container.style.display = 'block';
+
+    const interval = setInterval(() => {
+      images[current].classList.remove('active');
+      current++;
+      if (current >= images.length) {
+        clearInterval(interval);
+        container.style.display = 'none';
+        endMessage.style.display = 'block';
+        return;
+      }
+      images[current].classList.add('active');
+      caption.innerText = captions[current];
+    }, 2500);
+  }
+</script>
+
+</body>
+</html>

@@ -194,11 +194,14 @@
 
     let current = 0;
 
-    function startSlideshow() {
-      startScreen.style.display = "none";
-      slideshow.style.display = "flex";
-      showSlide();
-    }
+function startSlideshow() {
+  const music = document.querySelector("audio");
+  music.play(); 
+  startScreen.style.display = "none";
+  slideshow.style.display = "flex";
+  showSlide();
+}
+
 
     function showSlide() {
       if (current < images.length) {
@@ -223,3 +226,4 @@
   </script>
 </body>
 </html>
+

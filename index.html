@@ -35,7 +35,7 @@
     .intro {
       font-size: 1.3rem;
       opacity: 0;
-      animation: fadeIn 3s ease-in-out forwards;
+      animation: fadeIn 4s ease-in-out forwards; /* produženo trajanje animacije */
       animation-delay: 0.5s;
       max-width: 80%;
       color: #ffe4ec;
@@ -192,7 +192,7 @@
       introScreen.style.display = "none";
       startScreen.style.display = "flex";
       startScreen.style.flexDirection = "column";
-    }, 4000);
+    }, 6000); // produženo trajanje uvodnog teksta na 6 sekundi
 
     let current = 0;
 
@@ -237,5 +237,6 @@
   </script>
 </body>
 </html>
+
 
 

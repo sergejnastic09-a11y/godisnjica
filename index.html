@@ -76,12 +76,12 @@
       object-fit: contain;
       border-radius: 15px;
       box-shadow: 0 0 25px rgba(255, 0, 100, 0.8);
-      transition: opacity 1.5s ease, transform 4s ease;
+      opacity: 1;
+      transition: opacity 1s ease;
     }
 
     .slide-image.fade {
       opacity: 0;
-      transform: scale(1.05);
     }
 
     .caption {
@@ -119,7 +119,7 @@
 <body>
 
   <!-- 🎵 Pozadinska melodija -->
-  <audio autoplay loop hidden>
+  <audio id="music" loop>
     <source src="0003. Romantic Piano - AShamaluevMusic.mp3" type="audio/mpeg">
   </audio>
 
@@ -172,6 +172,7 @@
     const caption = document.getElementById("caption");
     const endScreen = document.getElementById("end-screen");
     const timer = document.getElementById("timer");
+    const music = document.getElementById("music");
 
     // ⏰ Brojač vremena veze
     function updateTimer() {
@@ -184,6 +185,7 @@
     }
 
     updateTimer();
+    setInterval(updateTimer, 60000); // update svake minute
 
     // ⏳ Prikaz uvoda, pa prelaz na glavni ekran
     setTimeout(() => {
@@ -194,25 +196,34 @@
 
     let current = 0;
 
-function startSlideshow() {
-  const music = document.querySelector("audio");
-  music.play(); 
-  startScreen.style.display = "none";
-  slideshow.style.display = "flex";
-  showSlide();
-}
+    function startSlideshow() {
+      // Pokušaj pokretanja muzike
+      music.play().catch(() => {
+        console.log("Klikni na dugme da bi muzika počela.");
+      });
 
+      startScreen.style.display = "none";
+      slideshow.style.display = "flex";
+      current = 0;
+      showSlide();
+    }
 
     function showSlide() {
       if (current < images.length) {
+        // fade out trenutna slika
         slide.classList.add("fade");
+
         setTimeout(() => {
+          // promeni sliku i caption
           slide.src = images[current].src;
           caption.textContent = images[current].text;
+
+          // fade in
           slide.classList.remove("fade");
-        }, 1000);
-        current++;
-        setTimeout(showSlide, 5000);
+          current++;
+        }, 1000); // trajanje fade
+
+        setTimeout(showSlide, 5000); // sledeća slika
       } else {
         endSlideshow();
       }
@@ -226,4 +237,5 @@ function startSlideshow() {
   </script>
 </body>
 </html>
+
 

@@ -1,187 +1,225 @@
 <!DOCTYPE html>
 <html lang="sr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Srećna godišnjica</title>
-<style>
-  body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background: #ffe6e6;
-    overflow: hidden;
-    text-align: center;
-    color: #ff0066;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Srećnih godinu dana ljubavi ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(45deg, #ffb6c1, #ff69b4, #c71585, #000);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      color: white;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
 
-  h1 {
-    margin-top: 50px;
-    font-size: 2.5em;
-  }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-  .heart-button {
-    margin-top: 50px;
-    font-size: 2em;
-    cursor: pointer;
-    background: #ff3366;
-    border: none;
-    color: white;
-    padding: 20px 40px;
-    border-radius: 50%;
-    transition: transform 0.2s;
-  }
+    h1 {
+      font-size: 2.5rem;
+      animation: fadeIn 3s ease-in-out forwards;
+    }
 
-  .heart-button:hover {
-    transform: scale(1.2);
-  }
+    .intro {
+      font-size: 1.3rem;
+      opacity: 0;
+      animation: fadeIn 3s ease-in-out forwards;
+      animation-delay: 0.5s;
+      max-width: 80%;
+      color: #ffe4ec;
+    }
 
-  #slideshow-container {
-    display: none;
-    margin-top: 50px;
-    width: 80%;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-  }
+    .heart-button {
+      background-color: red;
+      border: none;
+      color: white;
+      padding: 20px 30px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-top: 30px;
+      animation: pulse 1.5s infinite;
+      transition: transform 0.3s ease;
+    }
 
-  #slideshow {
-    position: relative;
-    width: 100%;
-    height: 500px; 
-    overflow: hidden;
-    border-radius: 10px;
-    background: #ffe6e6; 
-    box-shadow: 0 0 20px rgba(255,0,102,0.5);
-  }
+    .heart-button:hover {
+      transform: scale(1.2);
+    }
 
-  #slideshow img {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    object-fit: contain;
-    background: #ffe6e6;
-  }
+    .slideshow {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+      background: transparent;
+      text-align: center;
+      overflow: hidden;
+    }
 
-  #slideshow img.active {
-    opacity: 1;
-  }
+    .slide-image {
+      max-height: 80vh;
+      max-width: 90vw;
+      object-fit: contain;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(255, 0, 100, 0.8);
+      transition: opacity 1.5s ease, transform 4s ease;
+    }
 
-  #caption {
-    margin-top: 15px;
-    font-size: 1.2em;
-    color: #ff3366;
-  }
+    .slide-image.fade {
+      opacity: 0;
+      transform: scale(1.05);
+    }
 
-  /* Kraj poruka */
-  #end-message {
-    display: none;
-    font-size: 2em;
-    color: #ff0066;
-    margin-top: 50px;
-    animation: pulse 1s infinite alternate;
-  }
+    .caption {
+      margin-top: 20px;
+      font-size: 1.4rem;
+      color: #ffb6c1;
+      animation: fadeIn 2s ease-in-out;
+    }
 
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.2); }
-  }
+    .end-screen {
+      display: none;
+      text-align: center;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
 
-  /* Padajuca srca */
-  .heart {
-    position: absolute;
-    font-size: 24px;
-    animation: fall 5s linear infinite;
-    color: #ff3366;
-    user-select: none;
-  }
+    #timer {
+      margin-top: 15px;
+      color: #ffe6f2;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
 
-  @keyframes fall {
-    0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-  }
-</style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 15px red; }
+      50% { transform: scale(1.2); box-shadow: 0 0 30px pink; }
+      100% { transform: scale(1); box-shadow: 0 0 15px red; }
+    }
+  </style>
 </head>
 <body>
 
-<h1>Srećnih godinu dana ljubavi ❤️</h1>
-<button class="heart-button" onclick="startSlideshow()">💖</button>
+  <!-- 🎵 Pozadinska melodija -->
+  <audio autoplay loop hidden>
+    <source src="0003. Romantic Piano - AShamaluevMusic.mp3" type="audio/mpeg">
+  </audio>
 
-<div id="slideshow-container">
-  <div id="slideshow">
-    <img src="laura9.jpg" alt="Slika 1" class="active">
-    <img src="laura1.jpg" alt="Slika 2">
-    <img src="laura2.jpg" alt="Slika 3">
-    <img src="laura3.jpg" alt="Slika 4">
-    <img src="laura4.jpg" alt="Slika 5">
-    <img src="laura5.jpg" alt="Slika 6">
-    <img src="laura6.jpg" alt="Slika 7">
-    <img src="laura7.jpg" alt="Slika 8">
-    <img src="1000005130.jpg" alt="Slika 9">
-    <img src="laura10.jpg" alt="Slika 10">
+  <!-- 💌 Uvodni ekran -->
+  <div id="intro-screen">
+    <p class="intro">Pre godinu dana započela je naša priča...<br>
+    i svaka sekunda od tada vredi čitav svet. 💖</p>
   </div>
-  <div id="caption">Volim svaki trenutak sa tobom ❤️</div>
-</div>
 
-<div id="end-message">Volim te zauvek ❤️</div>
+  <!-- ❤️ Početni ekran -->
+  <div id="start-screen" style="display:none;">
+    <h1>Srećnih godinu dana ljubavi ❤️</h1>
+    <div id="timer"></div>
+    <button class="heart-button" onclick="startSlideshow()">❤️</button>
+  </div>
 
-<script>
-  // Padajuca srca
-  function createHeart() {
-    const heart = document.createElement('div');
-    heart.className = 'heart';
-    heart.innerText = '❤️';
-    heart.style.left = Math.random() * window.innerWidth + 'px';
-    heart.style.fontSize = (10 + Math.random() * 30) + 'px';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 5000);
-  }
-  setInterval(createHeart, 300);
+  <!-- 🖼️ Slideshow deo -->
+  <div id="slideshow" class="slideshow">
+    <img id="slide" class="slide-image" src="" alt="Slika">
+    <div id="caption" class="caption"></div>
+  </div>
 
-  const captions = [
-    "Volim svaki trenutak sa tobom ❤️",
-    "Ti si moje sunce u oblacima ☀️",
-    "Zauvek tvoj, zauvek moja 💞",
-    "S tobom je svaki dan posebna priča ✨",
-    "Ti činiš moj svet lepšim 🌹",
-    "Srećna godina ljubavi sa tobom 💖",
-    "Ti si moj dom gde god da idem 🏡",
-    "Hvala što me voliš takvog kakav jesam 💗",
-    "Tvoje oči su moje nebo 🌟",
-    "Zauvek zajedno, zauvek ti i ja 💑"
-  ];
+  <!-- ✨ Kraj -->
+  <div id="end-screen" class="end-screen">
+    <h1>💞 Volim te zauvek 💞</h1>
+    <p>Hvala ti na najlepših godinu dana mog života.</p>
+  </div>
 
-  function startSlideshow() {
-    document.querySelector('.heart-button').style.display = 'none';
-    const container = document.getElementById('slideshow-container');
-    const images = document.querySelectorAll('#slideshow img');
-    const caption = document.getElementById('caption');
-    const endMessage = document.getElementById('end-message');
+  <script>
+    // 🎞️ Slike i tekstovi
+    const images = [
+      { src: "laura9.jpg", text: "Tvoj osmeh je moj omiljeni prizor." },
+      { src: "laura1.jpg", text: "Sa tobom je svaki trenutak poseban." },
+      { src: "laura2.jpg", text: "Ti si moj dom, gde god da smo." },
+      { src: "laura3.jpg", text: "S tobom vreme staje i srce peva." },
+      { src: "laura4.jpg", text: "Naš svet ima boje samo kad si tu." },
+      { src: "laura5.jpg", text: "Zajedno smo najlepša priča." },
+      { src: "laura6.jpg", text: "Jedan pogled, i sve ima smisla." },
+      { src: "laura7.jpg", text: "Volim te više nego juče, a manje nego sutra." },
+      { src: "laura8.jpg", text: "Zajedno — naš mali univerzum." },
+      { src: "laura10.jpg", text: "Hvala ti što si ti." }
+    ];
+
+    const startDate = new Date("2024-10-06"); // datum od kad ste zajedno 💖
+
+    const introScreen = document.getElementById("intro-screen");
+    const startScreen = document.getElementById("start-screen");
+    const slideshow = document.getElementById("slideshow");
+    const slide = document.getElementById("slide");
+    const caption = document.getElementById("caption");
+    const endScreen = document.getElementById("end-screen");
+    const timer = document.getElementById("timer");
+
+    // ⏰ Brojač vremena veze
+    function updateTimer() {
+      const now = new Date();
+      const diff = now - startDate;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor(diff / (1000 * 60));
+      timer.textContent = `${days} dana, ${hours} sati, ${minutes} minuta ljubavi 💞`;
+    }
+
+    updateTimer();
+
+    // ⏳ Prikaz uvoda, pa prelaz na glavni ekran
+    setTimeout(() => {
+      introScreen.style.display = "none";
+      startScreen.style.display = "flex";
+      startScreen.style.flexDirection = "column";
+    }, 4000);
+
     let current = 0;
 
-    images.forEach(img => img.classList.remove('active'));
-    images[0].classList.add('active');
-    caption.innerText = captions[0];
-    container.style.display = 'block';
+    function startSlideshow() {
+      startScreen.style.display = "none";
+      slideshow.style.display = "flex";
+      showSlide();
+    }
 
-    const interval = setInterval(() => {
-      images[current].classList.remove('active');
-      current++;
-      if (current >= images.length) {
-        clearInterval(interval);
-        container.style.display = 'none';
-        endMessage.style.display = 'block';
-        return;
+    function showSlide() {
+      if (current < images.length) {
+        slide.classList.add("fade");
+        setTimeout(() => {
+          slide.src = images[current].src;
+          caption.textContent = images[current].text;
+          slide.classList.remove("fade");
+        }, 1000);
+        current++;
+        setTimeout(showSlide, 5000);
+      } else {
+        endSlideshow();
       }
-      images[current].classList.add('active');
-      caption.innerText = captions[current];
-    }, 2500);
-  }
-</script>
+    }
 
+    function endSlideshow() {
+      slideshow.style.display = "none";
+      endScreen.style.display = "block";
+      document.body.style.background = "radial-gradient(circle, #ffb6c1, #000)";
+    }
+  </script>
 </body>
 </html>

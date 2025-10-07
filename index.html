@@ -36,7 +36,7 @@
     .intro {
       font-size: 1.3rem;
       opacity: 0;
-      animation: fadeIn 4s ease-in-out forwards; /* produženo trajanje */
+      animation: fadeIn 4s ease-in-out forwards;
       animation-delay: 0.5s;
       max-width: 80%;
       color: #ffe4ec;
@@ -61,38 +61,48 @@
 
     .slideshow {
       display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      width: 100vw;
-      text-align: center;
-      overflow: hidden;
+      width: 100%;
+      height: 100%;
       position: relative;
+      overflow: hidden;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     .slide-image {
       position: absolute;
-      max-height: 80vh;
-      max-width: 90vw;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90%;
+      max-height: 80%;
       object-fit: contain;
       border-radius: 15px;
       box-shadow: 0 0 25px rgba(255,0,100,0.8);
       opacity: 0;
       transition: opacity 1s ease;
+      z-index: 1;
     }
 
     .slide-image.active {
       opacity: 1;
+      z-index: 2;
     }
 
     .caption {
-      margin-top: 20px;
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.5);
+      padding: 10px 20px;
+      border-radius: 10px;
       font-size: 1.4rem;
-      color: #ffb6c1;
-      animation: fadeIn 2s ease-in-out;
-      position: relative;
-      z-index: 2;
+      color: #fff;
+      text-shadow: 1px 1px 5px black;
+      max-width: 80%;
+      z-index: 3;
     }
 
     .end-screen {
@@ -122,32 +132,27 @@
 </head>
 <body>
 
-  <!-- 🎵 Pozadinska melodija -->
   <audio id="music" loop>
     <source src="0003. Romantic Piano - AShamaluevMusic.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- 💌 Uvodni ekran -->
   <div id="intro-screen">
     <p class="intro">Pre godinu dana započela je naša priča...<br>
     i svaka sekunda od tada vredi čitav svet. 💖</p>
   </div>
 
-  <!-- ❤️ Početni ekran -->
   <div id="start-screen" style="display:none;">
     <h1>Srećnih godinu dana ljubavi ❤️</h1>
     <div id="timer"></div>
     <button class="heart-button" onclick="startSlideshow()">❤️</button>
   </div>
 
-  <!-- 🖼️ Slideshow deo sa dve slike za crossfade -->
   <div id="slideshow" class="slideshow">
     <img id="slide1" class="slide-image" src="" alt="Slika">
     <img id="slide2" class="slide-image" src="" alt="Slika">
     <div id="caption" class="caption"></div>
   </div>
 
-  <!-- ✨ Kraj -->
   <div id="end-screen" class="end-screen">
     <h1>💞 Volim te zauvek 💞</h1>
     <p>Hvala ti na najlepših godinu dana mog života.</p>
@@ -155,20 +160,19 @@
 
   <script>
     const images = [
-      { src: "laura9.jpg", text: "Tvoj osmeh je moj omiljeni prizor." },
+      { src: "laura9.jpg", text: "Zajedno smo najlepša priča." },
       { src: "laura1.jpg", text: "Sa tobom je svaki trenutak poseban." },
-      { src: "laura2.jpg", text: "Ti si moj dom, gde god da smo." },
-      { src: "laura3.jpg", text: "S tobom vreme staje i srce peva." },
-      { src: "laura4.jpg", text: "Naš svet ima boje samo kad si tu." },
-      { src: "laura5.jpg", text: "Zajedno smo najlepša priča." },
-      { src: "laura6.jpg", text: "Jedan pogled, i sve ima smisla." },
+      { src: "laura10.jpg", text: "Ti si moj dom, gde god da smo." },
+      { src: "laura4.jpg", text: "S tobom vreme staje i srce peva." },
+      { src: "laura6.jpg", text: "Naš svet ima boje samo kad si tu." },
+      { src: "laura5.jpg", text: "Tvoj osmeh je moj omiljeni prizor." },
+      { src: "laura3.jpg", text: "Jedan pogled, i sve ima smisla." },
       { src: "laura7.jpg", text: "Volim te više nego juče, a manje nego sutra." },
-      { src: "1000005130.jpg", text: "Zajedno — naš mali univerzum." },
-      { src: "laura10.jpg", text: "Hvala ti što si ti." }
+      { src: "laura8.jpg", text: "Zajedno — naš mali univerzum." },
+      { src: "laura2.jpg", text: "Hvala ti što si ti." }
     ];
 
     const startDate = new Date("2024-10-06");
-
     const introScreen = document.getElementById("intro-screen");
     const startScreen = document.getElementById("start-screen");
     const slideshow = document.getElementById("slideshow");
@@ -179,25 +183,24 @@
     const timer = document.getElementById("timer");
     const music = document.getElementById("music");
 
-    // Brojač vremena veze
+    // Brojač vremena
     function updateTimer() {
       const now = new Date();
       const diff = now - startDate;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor(diff / (1000 * 60));
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor(diff / (1000*60*60));
+      const minutes = Math.floor(diff / (1000*60));
       timer.textContent = `${days} dana, ${hours} sati, ${minutes} minuta ljubavi 💞`;
     }
-
     updateTimer();
     setInterval(updateTimer, 60000);
 
-    // Prikaz uvoda, pa prelaz na glavni ekran
+    // Prikaz uvoda, pa glavni ekran
     setTimeout(() => {
       introScreen.style.display = "none";
       startScreen.style.display = "flex";
       startScreen.style.flexDirection = "column";
-    }, 6000); // duže trajanje uvodnog teksta
+    }, 6000);
 
     let current = 0;
     let showingSlide1 = true;
@@ -207,7 +210,6 @@
       startScreen.style.display = "none";
       slideshow.style.display = "flex";
 
-      // prva slika
       slide1.src = images[0].src;
       caption.textContent = images[0].text;
       slide1.classList.add("active");
@@ -217,14 +219,14 @@
     }
 
     function nextSlide() {
-      if (current >= images.length) {
+      if(current >= images.length) {
         endSlideshow();
         return;
       }
 
       const nextImage = images[current];
 
-      if (showingSlide1) {
+      if(showingSlide1) {
         slide2.src = nextImage.src;
         caption.textContent = nextImage.text;
         slide2.classList.add("active");

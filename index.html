@@ -19,6 +19,7 @@
       height: 100vh;
       flex-direction: column;
       text-align: center;
+      position: relative;
     }
 
     @keyframes gradientMove {
@@ -35,7 +36,7 @@
     .intro {
       font-size: 1.3rem;
       opacity: 0;
-      animation: fadeIn 4s ease-in-out forwards; /* produženo trajanje animacije */
+      animation: fadeIn 4s ease-in-out forwards; /* produženo trajanje */
       animation-delay: 0.5s;
       max-width: 80%;
       color: #ffe4ec;
@@ -65,23 +66,24 @@
       justify-content: center;
       height: 100vh;
       width: 100vw;
-      background: transparent;
       text-align: center;
       overflow: hidden;
+      position: relative;
     }
 
     .slide-image {
+      position: absolute;
       max-height: 80vh;
       max-width: 90vw;
       object-fit: contain;
       border-radius: 15px;
-      box-shadow: 0 0 25px rgba(255, 0, 100, 0.8);
-      opacity: 1;
+      box-shadow: 0 0 25px rgba(255,0,100,0.8);
+      opacity: 0;
       transition: opacity 1s ease;
     }
 
-    .slide-image.fade {
-      opacity: 0;
+    .slide-image.active {
+      opacity: 1;
     }
 
     .caption {
@@ -89,6 +91,8 @@
       font-size: 1.4rem;
       color: #ffb6c1;
       animation: fadeIn 2s ease-in-out;
+      position: relative;
+      z-index: 2;
     }
 
     .end-screen {
@@ -136,9 +140,10 @@
     <button class="heart-button" onclick="startSlideshow()">❤️</button>
   </div>
 
-  <!-- 🖼️ Slideshow deo -->
+  <!-- 🖼️ Slideshow deo sa dve slike za crossfade -->
   <div id="slideshow" class="slideshow">
-    <img id="slide" class="slide-image" src="" alt="Slika">
+    <img id="slide1" class="slide-image" src="" alt="Slika">
+    <img id="slide2" class="slide-image" src="" alt="Slika">
     <div id="caption" class="caption"></div>
   </div>
 
@@ -149,7 +154,6 @@
   </div>
 
   <script>
-    // 🎞️ Slike i tekstovi
     const images = [
       { src: "laura9.jpg", text: "Tvoj osmeh je moj omiljeni prizor." },
       { src: "laura1.jpg", text: "Sa tobom je svaki trenutak poseban." },
@@ -163,18 +167,19 @@
       { src: "laura10.jpg", text: "Hvala ti što si ti." }
     ];
 
-    const startDate = new Date("2024-10-06"); // datum od kad ste zajedno 💖
+    const startDate = new Date("2024-10-06");
 
     const introScreen = document.getElementById("intro-screen");
     const startScreen = document.getElementById("start-screen");
     const slideshow = document.getElementById("slideshow");
-    const slide = document.getElementById("slide");
+    const slide1 = document.getElementById("slide1");
+    const slide2 = document.getElementById("slide2");
     const caption = document.getElementById("caption");
     const endScreen = document.getElementById("end-screen");
     const timer = document.getElementById("timer");
     const music = document.getElementById("music");
 
-    // ⏰ Brojač vremena veze
+    // Brojač vremena veze
     function updateTimer() {
       const now = new Date();
       const diff = now - startDate;
@@ -185,48 +190,55 @@
     }
 
     updateTimer();
-    setInterval(updateTimer, 60000); // update svake minute
+    setInterval(updateTimer, 60000);
 
-    // ⏳ Prikaz uvoda, pa prelaz na glavni ekran
+    // Prikaz uvoda, pa prelaz na glavni ekran
     setTimeout(() => {
       introScreen.style.display = "none";
       startScreen.style.display = "flex";
       startScreen.style.flexDirection = "column";
-    }, 6000); // produženo trajanje uvodnog teksta na 6 sekundi
+    }, 6000); // duže trajanje uvodnog teksta
 
     let current = 0;
+    let showingSlide1 = true;
 
     function startSlideshow() {
-      // Pokušaj pokretanja muzike
-      music.play().catch(() => {
-        console.log("Klikni na dugme da bi muzika počela.");
-      });
-
+      music.play().catch(() => console.log("Klikni na dugme da bi muzika počela."));
       startScreen.style.display = "none";
       slideshow.style.display = "flex";
-      current = 0;
-      showSlide();
+
+      // prva slika
+      slide1.src = images[0].src;
+      caption.textContent = images[0].text;
+      slide1.classList.add("active");
+      current = 1;
+
+      setTimeout(nextSlide, 5000);
     }
 
-    function showSlide() {
-      if (current < images.length) {
-        // fade out trenutna slika
-        slide.classList.add("fade");
-
-        setTimeout(() => {
-          // promeni sliku i caption
-          slide.src = images[current].src;
-          caption.textContent = images[current].text;
-
-          // fade in
-          slide.classList.remove("fade");
-          current++;
-        }, 1000); // trajanje fade
-
-        setTimeout(showSlide, 5000); // sledeća slika
-      } else {
+    function nextSlide() {
+      if (current >= images.length) {
         endSlideshow();
+        return;
       }
+
+      const nextImage = images[current];
+
+      if (showingSlide1) {
+        slide2.src = nextImage.src;
+        caption.textContent = nextImage.text;
+        slide2.classList.add("active");
+        slide1.classList.remove("active");
+      } else {
+        slide1.src = nextImage.src;
+        caption.textContent = nextImage.text;
+        slide1.classList.add("active");
+        slide2.classList.remove("active");
+      }
+
+      showingSlide1 = !showingSlide1;
+      current++;
+      setTimeout(nextSlide, 5000);
     }
 
     function endSlideshow() {
@@ -237,6 +249,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 

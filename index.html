@@ -183,19 +183,13 @@
     const timer = document.getElementById("timer");
     const music = document.getElementById("music");
 
-    // Brojač vremena
-    function updateTimer() {
-      const now = new Date();
-      const diff = now - startDate;
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor(diff / (1000*60*60));
-      const minutes = Math.floor(diff / (1000*60));
-      timer.textContent = `${days} dana, ${hours} sati, ${minutes} minuta ljubavi 💞`;
-    }
-    updateTimer();
-    setInterval(updateTimer, 60000);
 
-    // Prikaz uvoda, pa glavni ekran
+    function updateTimer() {
+      timer.textContent = `365 dana, 8,760 sati, 525,600 minuta ljubavi 💞`;
+    }
+
+    updateTimer();
+
     setTimeout(() => {
       introScreen.style.display = "none";
       startScreen.style.display = "flex";
@@ -219,14 +213,14 @@
     }
 
     function nextSlide() {
-      if(current >= images.length) {
+      if (current >= images.length) {
         endSlideshow();
         return;
       }
 
       const nextImage = images[current];
 
-      if(showingSlide1) {
+      if (showingSlide1) {
         slide2.src = nextImage.src;
         caption.textContent = nextImage.text;
         slide2.classList.add("active");
@@ -249,8 +243,12 @@
       document.body.style.background = "radial-gradient(circle, #ffb6c1, #000)";
     }
   </script>
+
 </body>
 </html>
+
+
+
 
 
 
